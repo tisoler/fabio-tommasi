@@ -1,5 +1,4 @@
 import { Suspense } from "react"
-import { BUCKETS } from "constants/index"
 import { BestOffersSection } from "views/Homepage/BestOffersSection"
 import { CarouselSectionSkeleton } from "views/Homepage/CarouselSection"
 import { CategoriesSection, CategoriesSectionSkeleton } from "views/Homepage/CategoriesSection"
@@ -13,16 +12,13 @@ export const dynamic = "force-static"
 
 export const dynamicParams = true
 
-export default function Homepage({ params: { bucket } }: { params: { bucket: string } }) {
-  const heroTitles = {
-    a: "Your daily trendsetting deals",
-    b: "Spring into Savings! Up to 60% Off",
-  }
+export default function Homepage() {
+  const heroTitle = "Atención y respuesta siempre en todo lugar.";
 
   return (
     <div className="flex w-full flex-col">
-      <HeroSection className="-order-1 md:-order-2" title={heroTitles[bucket]} />
-      <AnnouncementBar className="-order-2 md:-order-1" />
+      <HeroSection className="-order-1 md:-order-2" title={heroTitle} />
+      <AnnouncementBar className="-order-1" />
 
       <Suspense fallback={<CategoriesSectionSkeleton />}>
         <CategoriesSection />
@@ -37,8 +33,4 @@ export default function Homepage({ params: { bucket } }: { params: { bucket: str
       </Suspense>
     </div>
   )
-}
-
-export async function generateStaticParams() {
-  return BUCKETS.HOME.map((bucket) => ({ bucket }))
 }

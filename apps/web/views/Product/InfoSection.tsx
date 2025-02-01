@@ -1,21 +1,29 @@
 import { PlatformVariant } from "@enterprise-commerce/core/platform/types"
 import { Combination } from "utils/productOptionsUtils"
 import { StarRating } from "./StarRating"
+import WhatsAppButton from "components/WhatsAppButton"
 
 interface InfoSectionProps {
   title: string
   description: string
+  handle: string
   combination: Combination | PlatformVariant | undefined
   className?: string
   avgRating?: number
   totalReviews?: number
 }
 
-export function InfoSection({ title, description, combination, className, avgRating, totalReviews }: InfoSectionProps) {
+export function InfoSection({ title, description, handle, combination, className, avgRating, totalReviews }: InfoSectionProps) {
   return (
     <div className={className}>
       <div className="mb-6">
-        <h1 className="mb-1 text-xl/6 tracking-[-1px] md:text-4xl">{title}</h1>
+        <div className="flex items-center mt-4">
+          <h1 className="mr-3 mb-1 text-xl/6 tracking-[-1px] md:text-4xl">{title}</h1>
+          <WhatsAppButton
+            dimension="chico"
+            mensaje={`Hola, me interesa tener más información sobre ${title}. Link: http://fabiotommasi.com.ar/product/${handle}`}
+          />
+        </div>
         {!!avgRating && !!totalReviews && (
           <div className="flex items-center space-x-1">
             <StarRating rating={Math.ceil(avgRating)} />

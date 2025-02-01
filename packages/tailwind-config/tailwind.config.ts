@@ -36,6 +36,8 @@ const config: Omit<Config, "content"> = {
           800: "#1e40af",
           900: "#1e3a8a",
         },
+        'color-marca': '#eb1923',
+        'color-sec-marca': '#babdbf',
       },
       fontFamily: {
         body: [

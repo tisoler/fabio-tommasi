@@ -32,7 +32,7 @@ export const env = createEnv({
   },
   client: {},
   runtimeEnv: {
-    IS_DEMO_MODE: process.env.NEXT_PUBLIC_IS_DEMO_MODE,
+    IS_DEMO_MODE: process.env.NEXT_PUBLIC_IS_DEMO_MODE || "false",
     SHOPIFY_STOREFRONT_ACCESS_TOKEN: process.env.SHOPIFY_STOREFRONT_ACCESS_TOKEN || "demo",
     SHOPIFY_ADMIN_ACCESS_TOKEN: process.env.SHOPIFY_ADMIN_ACCESS_TOKEN || "demo",
     SHOPIFY_APP_API_SECRET_KEY: process.env.SHOPIFY_APP_API_SECRET_KEY || "demo",
@@ -44,7 +44,7 @@ export const env = createEnv({
     MEILISEARCH_HOST: process.env.MEILISEARCH_HOST || "demo",
     OPENAI_API_KEY: process.env.OPENAI_API_KEY,
     MEILISEARCH_REVIEWS_INDEX: process.env.MEILISEARCH_REVIEWS_INDEX,
-    LIVE_URL: process.env.LIVE_URL || "https://commerce.blazity.com",
+    LIVE_URL: process.env.LIVE_URL || "https://fabiotommasi.com.ar",
     ANALYZE: process.env.ANALYZE,
     IS_GTM_ENABLED: process.env.IS_GTM_ENABLED,
     IS_VERCEL_ANALYTICS_ENABLED: process.env.IS_VERCEL_ANALYTICS_ENABLED || "true",

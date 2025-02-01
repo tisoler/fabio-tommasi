@@ -2,229 +2,44 @@ import "./globals.css"
 
 import nextDynamic from "next/dynamic"
 import Script from "next/script"
-import { Suspense } from "react"
+import Image from "next/image"
+import { Suspense, useMemo } from "react"
 import { Toaster } from "sonner"
 import { CallToAction } from "components/CallToAction/CallToAction"
 import { Footer } from "components/Footer/Footer"
 import { Modals } from "components/Modals/Modals"
 import { mobileInlineScript } from "components/NavigationBar/mobileInlineScript"
 import { NavigationBar } from "components/NavigationBar/NavigationBar"
-import { NavItem } from "components/NavigationBar/types"
+import { NavItem, SubmenuItem, Variant } from "components/NavigationBar/types"
 import { TopBar } from "components/TopBar/TopBar"
 import { FlagValues } from "views/FlagValues"
 import { ThirdParties } from "views/ThirdParties"
 import { env } from "env.mjs"
 import { Metadata } from "next"
-import { GithubBadge } from "views/GithubBadge"
-import { DemoModeAlert } from "views/DemoModeAlert"
+import { EsquinaGris } from "views/EsquinaGris"
 import { CartView } from "views/Cart/CartView"
+import WhatsAppButton from "components/WhatsAppButton"
+import { Categoria } from "types/categoria"
+import { obtenerCategorias } from "servicios/categoria"
 
 const DraftToolbar = nextDynamic(() => import("views/DraftToolbar"), { ssr: false })
 
 export const revalidate = 3600
 
-const navigationItems: NavItem[] = [
-  {
-    text: "Fashion",
-    href: "/category/fashion",
-    submenu: {
-      variant: "text-grid",
-      items: [
-        {
-          text: "Women",
-          href: "/category/women",
-          items: [
-            { text: "Shirts & Blouses", href: "/category/shirts-and-blouses" },
-            { text: "Blazers & Vests", href: "/category/blazers-and-vests" },
-            { text: "Cardigans & Sweaters", href: "/category/cardigans-and-sweaters" },
-            { text: "Dresses", href: "/category/dresses" },
-            { text: "Skirts", href: "/category/skirts" },
-          ],
-        },
-        {
-          text: "Men",
-          href: "/category/men",
-          items: [
-            { text: "T-shirts & Tanks", href: "/category/t-shirts-and-tanks" },
-            { text: "Hoodies & Sweatshirts", href: "/category/hoodies-and-sweatshirts" },
-            { text: "Blazers & Suits", href: "/category/blazers-and-suits" },
-            { text: "Shorts", href: "/category/shorts" },
-            { text: "Outerwear", href: "/category/outerwear" },
-          ],
-        },
-        {
-          text: "Kids",
-          href: "/category/kids",
-          items: [
-            { text: "Clothing", href: "/category/clothing" },
-            { text: "Activewear", href: "/category/activewear" },
-            { text: "Accessories", href: "/category/kids-accessories" },
-            { text: "Footwear", href: "/category/footwear" },
-          ],
-        },
-      ],
-    },
-  },
-  {
-    text: "Electronics",
-    href: "/category/electronics",
-    submenu: {
-      variant: "text-grid",
-      items: [
-        {
-          text: "Audio Devices",
-          href: "/category/audio-devices",
-          items: [
-            { text: "Headphones", href: "/category/headphones" },
-            { text: "Speakers", href: "/category/speakers" },
-          ],
-        },
-        {
-          text: "Cameras",
-          href: "/category/cameras",
-          items: [
-            { text: "Digital Cameras", href: "/category/digital-cameras" },
-            { text: "Action Cameras", href: "/category/action-cameras" },
-          ],
-        },
-        {
-          text: "Smartphones",
-          href: "/category/smartphones",
-        },
-        {
-          text: "Laptops",
-          href: "/category/laptops",
-        },
-        {
-          text: "Screens",
-          href: "/category/screens",
-        },
-      ],
-    },
-  },
-  {
-    text: "Sports & Outdoors",
-    href: "/category/sports-and-outdoors",
-    submenu: {
-      variant: "text-grid",
-      items: [
-        {
-          href: "/category/exercise-equipment",
-          text: "Exercise Equipment",
-        },
-        {
-          href: "/category/outdoor-gear",
-          text: "Outdoor Gear",
-        },
-        {
-          href: "/category/sportswear",
-          text: "Sportswear",
-        },
-        {
-          href: "/category/athletic-footwear",
-          text: "Athletic Footwear",
-        },
-      ],
-    },
-  },
-  {
-    text: "Beauty",
-    href: "/category/beauty",
-    submenu: {
-      variant: "text-grid",
-      items: [
-        {
-          text: "Skin Care",
-          href: "/category/skin-care",
-          items: [
-            { text: "Cleansers", href: "/category/cleansers" },
-            { text: "Moisturizers", href: "/category/moisturizers" },
-            { text: "Treatments & Serums", href: "/category/treatments-and-serums" },
-          ],
-        },
-        {
-          text: "Makeup",
-          href: "/category/makeup",
-          items: [
-            { text: "Face Makeup", href: "/category/face-makeup" },
-            { text: "Eye Makeup", href: "/category/eye-makeup" },
-            { text: "Lip Makeup", href: "/category/lip-makeup" },
-          ],
-        },
-        {
-          text: "Haircare",
-          href: "/category/haircare",
-          items: [
-            { text: "Shampoos & Conditioners", href: "/category/shampoos-and-conditioners" },
-            { text: "Styling Products", href: "/category/styling-products" },
-          ],
-        },
-
-        {
-          text: "Fragrances",
-          href: "/category/fragrances",
-          items: [
-            { text: "Perfumes", href: "/category/perfumes" },
-            { text: "Body Sprays", href: "/category/body-sprays" },
-          ],
-        },
-      ],
-    },
-  },
-  {
-    text: "Furniture",
-    href: "/category/furniture",
-    submenu: {
-      variant: "text-grid",
-      items: [
-        {
-          text: "Living Room",
-          href: "/category/living-room-furniture",
-          items: [
-            { text: "Sofas & Sectionals", href: "/category/sofas-and-sectionals" },
-            { text: "Coffee Tables", href: "/category/coffee-tables" },
-            { text: "TV Stands", href: "/category/tv-stands" },
-          ],
-        },
-
-        {
-          text: "Bedroom",
-          href: "/category/bedroom-furniture",
-          items: [
-            { text: "Beds", href: "/category/beds" },
-            { text: "Dressers", href: "/category/dressers" },
-            { text: "Nightstands", href: "/category/nightstands" },
-          ],
-        },
-
-        {
-          text: "Office",
-          href: "/category/office-furniture",
-          items: [
-            { text: "Desks", href: "/category/desks" },
-            { text: "Office Chairs", href: "/category/office-chairs" },
-            { text: "Storage Solutions", href: "/category/storage-solutions" },
-          ],
-        },
-      ],
-    },
-  },
-]
-
 export const metadata: Metadata = {
-  title: "Next.js Enterprise Commerce | Blazity",
-  description: "AI-FIRST NEXT.JS STOREFRONT FOR COMPOSABLE COMMERCE",
+  title: "Fabio Tommasi | Agro",
+  description: "Concesionario agrícola: maquinaria nueva y usada, camiones, pick-ups, autos.",
   metadataBase: new URL(env.LIVE_URL!),
   openGraph: {
-    title: "Next.js Enterprise Commerce | Blazity",
-    description: "AI-FIRST NEXT.JS STOREFRONT FOR COMPOSABLE COMMERCE",
+    title: "Fabio Tommasi | Agro",
+    description: "Concesionario agrícola: maquinaria nueva y usada, camiones, pick-ups, autos.",
     images: ["/opengraph-image.jpg"],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Next.js Enterprise Commerce | Blazity",
-    description: "AI-FIRST NEXT.JS STOREFRONT FOR COMPOSABLE COMMERCE",
-    creator: "@blazity",
+    title: "Fabio Tommasi | Agro",
+    description: "Concesionario agrícola: maquinaria nueva y usada, camiones, pick-ups, autos.",
+    creator: "@tisoler",
     images: ["/opengraph-image.jpg"],
   },
   verification: {
@@ -233,17 +48,62 @@ export const metadata: Metadata = {
     yahoo: "yahoo",
   },
   generator: "Next.js",
-  applicationName: "Next.js",
+  applicationName: "fabioTommasiAgro",
+}
+
+const agregarEnSubmenuDelPadre = (itemsNavegacion: NavItem[] | SubmenuItem[], nuevoItem: NavItem) => {
+  for (const item of itemsNavegacion) {
+    if ('submenu' in item) {
+      if (item.id === nuevoItem.idCategoriaPadre) {
+        item.submenu?.items?.push(nuevoItem);
+        break;
+      } else if (item.submenu?.items?.length) {
+        agregarEnSubmenuDelPadre(item.submenu?.items, nuevoItem);
+      }
+    }
+  };
+};
+
+const generarItemsNavegacion = (categorias: Categoria[]): NavItem[] => {
+  const itemsNavegacion: NavItem[] = [];
+  categorias?.forEach((categoria) => {
+    const cat = {
+      id: categoria.id,
+      ...(categoria.idCategoriaPadre && { idCategoriaPadre: categoria.idCategoriaPadre }),
+      text: categoria.titulo,
+      href: categoria.href,
+      ...(categoria.tipoSubMenu && {
+        submenu: {
+          variant: categoria.tipoSubMenu as Variant,
+          items: [],
+        }
+      }),
+    }
+    if (categoria.idCategoriaPadre) {
+      agregarEnSubmenuDelPadre(itemsNavegacion, cat);
+    } else {
+      itemsNavegacion.push(cat);
+    }
+  });
+  return itemsNavegacion;
 }
 
 export default async function RootLayout({ children }: { children: React.ReactNode }) {
+  const categorias = await obtenerCategorias();
+  const itemsNavegacion: NavItem[] = generarItemsNavegacion(categorias);
+  
   return (
     <html lang="en">
       <body>
         <Script id="mobileMegaMenuLogic" strategy="lazyOnload">{`${mobileInlineScript}`}</Script>
 
         <TopBar />
-        <NavigationBar items={navigationItems} />
+        <NavigationBar items={itemsNavegacion} />
+        <div className="flex md:hidden justify-around items-center bg-white border-b border-b-[0.1rem] py-0.5">
+          <Image width={160} height={75} className="h-[52.5px] w-[130px] max-[400px]:w-[107px] px-2 max-[400px]:p-0.5 bg-color-marca" alt="PNC remolques" src={"/pnc_logo_remolques.png"} />
+          <Image width={160} height={75} className="border border-black h-[52.5px] w-[134.6px] max-[400px]:w-[130px]" alt="Maquinarias agrícolas y remolques Ombú" src={"/ombu-logo.png"} />
+          <Image width={160} height={75} className="h-[52.5px] w-[130px] max-[400px]:w-[107px] px-2 max-[400px]:p-0.5 bg-color-marca" alt="PNC remolques" src={"/pnc_logo_agro.png"} />
+        </div>
 
         {children}
 
@@ -265,8 +125,9 @@ export default async function RootLayout({ children }: { children: React.ReactNo
           <ThirdParties />
         </Suspense>
 
-        <GithubBadge />
-        <DemoModeAlert />
+        <EsquinaGris />
+
+        <WhatsAppButton fijo />
       </body>
     </html>
   )

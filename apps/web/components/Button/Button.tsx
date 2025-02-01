@@ -7,7 +7,7 @@ const buttonVariants = cva("inline-flex border border-black rounded-md text-cent
   variants: {
     variant: {
       primary: "hover:text-white text-black bg-white",
-      secondary: "hover:text-black text-white bg-black",
+      secondary: "hover:text-black text-white bg-color-marca",
       ghost: "hover:bg-accent hover:text-accent-foreground border-0 bg-transparent",
       outline: "bg-transparent",
     },

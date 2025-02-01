@@ -21,10 +21,6 @@ export function getDemoCategories() {
   return require("public/demo-categories-data.json")
 }
 
-export function getDemoSingleCategory(handle: string) {
-  return getDemoCategories().find((c) => c.handle === handle) || null
-}
-
 export function getDemoProductReviews() {
   return require("public/demo-product-reviews-data.json")
 }

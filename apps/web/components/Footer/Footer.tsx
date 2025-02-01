@@ -2,7 +2,7 @@ import Link from "next/link"
 
 export function Footer() {
   return (
-    <div className="bg-black text-white">
+    <div className="bg-color-marca text-white">
       <div className="max-w-container-md mx-auto flex w-full flex-col justify-between px-4 xl:px-0">
         <header className="flex justify-end gap-4 pt-8">
           <Link prefetch={false} target="_blank" href={"https://www.facebook.com/blazity/"} aria-label="Facebook link">
@@ -26,21 +26,21 @@ export function Footer() {
           </Link>
         </header>
         <main className="py-32">
-          <Link href="https://v0.dev/" target="_blank">
+          <Link href="https://github.com/tisoler" target="_blank">
             <span className="focus:ring-ring mb-4 inline-flex w-fit items-center whitespace-nowrap rounded-full border border-transparent bg-white px-2.5 py-0.5 text-xs font-semibold text-black transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2">
-              Designed by v0
+              Desarrollado por tisoler
             </span>
           </Link>
-          <p className="text-3xl font-bold">Missing feature? </p>
+          <p className="text-3xl font-bold">Sugerencias y mejoras </p>
           <p className="mt-1 text-xl">
-            <a className="p-1 underline" href="mailto:contact@blazity.com">
-              Let us know
+            <a className="p-1 underline" href="mailto:diegompaz@gmail.com">
+              Envianos tus sugerencias
             </a>
-            , we&apos;ll build it!
+            , ¡nosotros las desarrollamos!
           </p>
         </main>
         <footer className="mt-auto flex flex-col items-center justify-between pb-8 text-neutral-300 md:flex-row">
-          <span className="text-sm">2024 © Lorem Ipsum. All Rights Reserved.</span>
+          <span className="text-sm">2024 © Fabio Tommasi Agro. Todos los derechos reservados.</span>
           <div className="mt-4 flex space-x-4 md:mt-0">
             <Link prefetch={false} className="text-sm hover:underline" href="/privacy-policy">
               Privacy and Cookie Policy

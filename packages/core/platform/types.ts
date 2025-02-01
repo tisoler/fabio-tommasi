@@ -4,6 +4,19 @@ export interface PlatformMenu {
   items: Array<Pick<MenuItem, "id" | "resource" | "title" | "items">>
 }
 
+export interface Unidad {
+  id: string
+  titulo: string
+  descripcion: string
+  descripcionHtml: SVGStringList
+  imagenDestacada: PlatformImage
+  imagenes: PlatformImage[]
+  seo: {
+    descripcion?: string | null | undefined
+    titulo?: string | null | undefined
+  }
+}
+
 export interface PlatformProduct {
   id: string
   handle: string

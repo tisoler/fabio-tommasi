@@ -39,6 +39,11 @@ const config = withPlugins([[withVercelToolbar(), withBundleAnalyzer({ enabled: 
         hostname: "cdn.shopify.com",
         port: "",
       },
+      {
+        protocol: "https",
+        hostname: "tisolercdn.nyc3.cdn.digitaloceanspaces.com",
+        port: "",
+      },
     ],
   },
   rewrites() {

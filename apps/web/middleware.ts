@@ -1,7 +1,6 @@
 import { ScalableBloomFilter } from "bloom-filters"
 import { NextRequest, NextResponse } from "next/server"
-import { getBucket } from "utils/abTesting"
-import { BUCKETS, facetParams } from "constants/index"
+import { facetParams } from "constants/index"
 import GeneratedBloomFilter from "./redirects/bloom-filter.json"
 
 type RedirectEntry = {
@@ -12,7 +11,6 @@ type RedirectEntry = {
 type Route = {
   page: string
   cookie: string
-  buckets: readonly string[]
 }
 
 const BLOOM_FILTER = ScalableBloomFilter.fromJSON(GeneratedBloomFilter as any)
@@ -20,7 +18,6 @@ const ROUTES: Record<string, Route | undefined> = {
   "/": {
     page: "/home",
     cookie: "bucket-home",
-    buckets: BUCKETS.HOME,
   },
 }
 
@@ -40,7 +37,11 @@ export async function middleware(request: NextRequest) {
 
   const route = ROUTES[pathname]
   if (route) {
-    return handleAbTestingMiddleware(request, route)
+    const url = request.nextUrl.clone()
+    url.pathname = `${route.page}`
+
+    const res = NextResponse.rewrite(url)
+    return res
   }
 
   if (isCLP(request)) {
@@ -71,24 +72,6 @@ async function handleRedirectsMiddleware(request: NextRequest) {
   } catch (error) {
     console.error(error)
   }
-}
-
-function handleAbTestingMiddleware(request: NextRequest, route: Route) {
-  let bucket = request.cookies.get(route.cookie)?.value
-  let hasBucket = !!bucket
-
-  if (!bucket || !route.buckets.includes(bucket)) {
-    bucket = getBucket(route.buckets)
-    hasBucket = false
-  }
-
-  const url = request.nextUrl.clone()
-  url.pathname = `${route.page}/${bucket}`
-
-  const res = NextResponse.rewrite(url)
-  !hasBucket && res.cookies.set(route.cookie, bucket)
-
-  return res
 }
 
 function handleCLPMiddleware(request: NextRequest) {

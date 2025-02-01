@@ -3,6 +3,7 @@
 import { PlatformImage } from "@enterprise-commerce/core/platform/types"
 import { Breadcrumbs } from "components/Breadcrumbs/Breadcrumbs"
 import { Skeleton } from "components/Skeleton/Skeleton"
+import WhatsAppButton from "components/WhatsAppButton"
 import { useReadMore } from "utils/useReadMore"
 
 interface HeroSectionProps {
@@ -25,7 +26,13 @@ export function HeroSection({ title, handle, description }: HeroSectionProps) {
     <>
       <Breadcrumbs items={{ Home: "/", [title]: `/category/${handle}` }} />
       <header className="mt-2">
-        <h1 className="mt-4 text-3xl font-extrabold tracking-tight text-gray-900 sm:text-4xl">{title}</h1>
+        <div className="flex items-center mt-4">
+          <h1 className="mr-3 text-3xl font-extrabold tracking-tight text-gray-900 sm:text-4xl">{title}</h1>
+          <WhatsAppButton
+            dimension="chico"
+            mensaje={`Hola, me interesa tener más información sobre ${title}. Link: http://fabiotommasi.com.ar/category/${handle}`}
+          />
+        </div>
         <div className="mt-2 text-lg text-gray-500 transition-all" dangerouslySetInnerHTML={{ __html: currentText }} />
         {isTruncated ? readMoreMarkup : null}
       </header>

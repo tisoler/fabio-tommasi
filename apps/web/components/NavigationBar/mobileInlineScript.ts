@@ -33,12 +33,29 @@ function showSubMenu(children) {
   menu.querySelector(".menu__header")?.classList.add("is-active")
 }
 
-function hideSubMenu() {
+function hideSubMenu(e) {
   if (subMenu) subMenu.style.animation = "slideRight 0.25s ease forwards"
-  setTimeout(() => subMenu?.classList.remove("is-active"), 300)
+  setTimeout(
+    () => {
+      // Quitar visibilidad al submenú actual para mostrar el anterior
+      subMenu?.classList.remove("is-active")
 
-  menu.querySelector(".menu__title").textContent = ""
-  menu.querySelector(".menu__header").classList.remove("is-active")
+      // Cambiar el título del header si hay submenú previo, si no limpiar el header
+      const newSubMenu = subMenu?.closest(".submenu.is-active")
+      if (newSubMenu) {
+        const children = newSubMenu.closest(".menu__dropdown")
+        if (children) {
+          const menuTitle = children.querySelector("i").parentNode.childNodes[0].textContent
+          menu.querySelector(".menu__title").textContent = menuTitle
+        }
+      } else {
+        menu.querySelector(".menu__title").textContent = ""
+        menu.querySelector(".menu__header").classList.remove("is-active")
+      }
+
+      // Actualizar el submenú actual
+      if (newSubMenu) subMenu = newSubMenu
+    }, 300)
 }
 
 function toggleSubMenu(e) {

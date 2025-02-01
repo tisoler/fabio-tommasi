@@ -83,6 +83,7 @@ export default async function Product({ params: { slug } }: ProductProps) {
               combination={combination}
               avgRating={product.avgRating}
               totalReviews={product.totalReviews}
+              handle={product.handle}
             />
             {hasOnlyOneVariant ? null : <VariantsSection combination={combination} handle={product.handle} className="pb-4" variants={product.variants} />}
 

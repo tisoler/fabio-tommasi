@@ -5,24 +5,25 @@ import { QuickAdd } from "./QuickAdd"
 import { type CurrencyType, mapCurrencyToSign } from "utils/mapCurrencyToSign"
 import type { CommerceProduct } from "types"
 import { StarIcon } from "components/Icons/StarIcon"
+import { ProductoUnidad } from "types/unidad"
 
-interface ProductCardProps extends Pick<CommerceProduct, "variants" | "handle" | "images" | "title" | "featuredImage" | "minPrice" | "avgRating" | "totalReviews"> {
+interface ProductCardProps extends Pick<ProductoUnidad, "variants" | "handle" | "images" | "title" | "featuredImage" | "minPrice" | "avgRating" | "totalReviews"> {
   priority?: boolean
   className?: string
 }
 
 export function ProductCard(props: ProductCardProps) {
-  const variant = props.variants?.find(Boolean)?.price
+  // const variant = props.variants?.find(Boolean)?.price
   const href = `/product/${props.handle}`
   const linkAria = `Visit product: ${props.title}`
-  const featuredImageAltTag = props.images?.find((singleImage) => singleImage.url === props.featuredImage?.url)?.altText || ""
+  // const featuredImageAltTag = props.images?.find((singleImage) => singleImage.url === props.featuredImage?.url)?.altText || ""
 
   return (
     <div className={cn("group relative p-0 md:bg-transparent md:p-0", props.className)}>
       <div className="relative flex size-full min-h-[100px] items-center justify-center">
         <Link aria-label={linkAria} href={href} className="transform-[translateZ(0)] relative z-[2] size-[200px] overflow-hidden md:size-[300px]">
           <Image
-            alt={featuredImageAltTag}
+            // alt={featuredImageAltTag}
             className="z-0 select-none object-cover transition-transform group-hover:scale-105"
             fill
             src={props.featuredImage?.url || "/default-product-image.svg"}
@@ -45,11 +46,13 @@ export function ProductCard(props: ProductCardProps) {
               </span>
             </div>
           )}
-          {!!variant && (
+          {/*
+          !!variant && (
             <p className="text-base font-semibold tracking-tight text-black md:text-lg">
               From {props.minPrice.toFixed(2) + mapCurrencyToSign(variant.currencyCode as CurrencyType)}
             </p>
-          )}
+          )
+            */}
         </div>
       </Link>
     </div>

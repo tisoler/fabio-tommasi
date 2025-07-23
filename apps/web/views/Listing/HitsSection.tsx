@@ -1,8 +1,9 @@
 import { ProductCard } from "components/ProductCard/ProductCard"
 import type { CommerceProduct } from "types"
+import { ProductoUnidad } from "types/unidad"
 
 interface HitsSectionProps {
-  hits: CommerceProduct[]
+  hits: ProductoUnidad[]
 }
 
 export async function HitsSection({ hits }: HitsSectionProps) {

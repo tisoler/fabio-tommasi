@@ -1,7 +1,7 @@
 import { Skeleton } from "components/Skeleton/Skeleton"
 import Image from "next/image"
 import Link from "next/link"
-import { obtenerCategorias } from "servicios/categoria"
+import { obtenerCategorias } from "app/actions/categoria.actions"
 import { Categoria } from "types/categoria";
 
 export async function CategoriesSection() {
@@ -18,7 +18,7 @@ export async function CategoriesSection() {
       <div className="mt-6 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
         {categorias.map((categoria: Categoria, index: number) => (
           <Link className="group relative h-[260px] w-full overflow-hidden rounded-2xl" key={categoria.id} href={categoria.href}>
-            <div className="bg-neutral-100 transition-all group-hover:bg-neutral-50 transition-opacity duration-300 ease-in-out group-hover:opacity-50">
+            <div className="bg-neutral-100 group-hover:bg-neutral-50 transition-all duration-300 ease-in-out group-hover:opacity-50">
               <Image fill className="object-cover w-auto h-auto" alt="" src={categoria.imagenEscritorio || ""} />
             </div>
             <div className="absolute flex items-center bottom-6 h-10 p-2 pr-6 bg-color-marca group-hover:bg-white text-white group-hover:text-color-marca rounded-tr-md">

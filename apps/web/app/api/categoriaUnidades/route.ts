@@ -13,8 +13,11 @@ const pool = mysql.createPool(dbConfig);
 // GET obtener unidades para una categoria
 export async function GET(request: NextRequest) {
   try {
-    const idCategoria = request.nextUrl.searchParams.get("idCategoria");
-    const [rows] = await pool.execute(`SELECT * FROM unidades WHERE idCategoria = ${idCategoria}`);
+    const slug = request.nextUrl.searchParams.get("slug");
+    const [rows] = await pool.execute(`SELECT u.* FROM unidades as u
+      INNER JOIN unidadCategoria as uc ON uc.idUnidad = u.id
+      INNER JOIN categorias as c ON c.id = uc.idCategoria
+      WHERE c.slug = '${slug}'`);
     
     return NextResponse.json({
       success: true,

@@ -20,7 +20,7 @@ import { EsquinaGris } from "views/EsquinaGris"
 import { CartView } from "views/Cart/CartView"
 import WhatsAppButton from "components/WhatsAppButton"
 import { Categoria } from "types/categoria"
-import { obtenerCategorias } from "servicios/categoria"
+import { obtenerCategorias } from "app/actions/categoria.actions"
 
 const DraftToolbar = nextDynamic(() => import("views/DraftToolbar"), { ssr: false })
 
@@ -99,7 +99,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
 
         <TopBar />
         <NavigationBar items={itemsNavegacion} />
-        <div className="flex md:hidden justify-around items-center bg-white border-b border-b-[0.1rem] py-0.5">
+        <div className="flex md:hidden justify-around items-center bg-white border-b-[0.1rem] py-0.5">
           <Image width={160} height={75} className="h-[52.5px] w-[130px] max-[400px]:w-[107px] px-2 max-[400px]:p-0.5 bg-color-marca" alt="PNC remolques" src={"/pnc_logo_remolques.png"} />
           <Image width={160} height={75} className="border border-black h-[52.5px] w-[134.6px] max-[400px]:w-[130px]" alt="Maquinarias agrícolas y remolques Ombú" src={"/ombu-logo.png"} />
           <Image width={160} height={75} className="h-[52.5px] w-[130px] max-[400px]:w-[107px] px-2 max-[400px]:p-0.5 bg-color-marca" alt="PNC remolques" src={"/pnc_logo_agro.png"} />

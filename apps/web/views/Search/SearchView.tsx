@@ -15,6 +15,7 @@ import { env } from "env.mjs"
 import { CommerceProduct, SearchParamsType } from "types"
 import { HIERARCHICAL_SEPARATOR, HITS_PER_PAGE } from "constants/index"
 import { Controls } from "views/Listing/Controls"
+import { ProductoUnidad } from "types/unidad"
 
 interface SearchViewProps {
   searchParams: SearchParamsType
@@ -22,6 +23,7 @@ interface SearchViewProps {
   collection?: PlatformCollection
   disabledFacets?: string[]
   intro?: ReactNode
+  unidades: ProductoUnidad[]
 }
 
 export const searchParamsCache = createSearchParamsCache({
@@ -36,9 +38,10 @@ export const searchParamsCache = createSearchParamsCache({
   rating: parseAsInteger,
 })
 
-export async function SearchView({ searchParams, disabledFacets, intro, collection }: SearchViewProps) {
+export async function SearchView({ searchParams, disabledFacets, intro, collection, unidades }: SearchViewProps) {
   const { q, sortBy, page, ...rest } = searchParamsCache.parse(searchParams)
 
+  
   const filterBuilder = new FilterBuilder()
 
   if (collection) {
@@ -46,6 +49,9 @@ export async function SearchView({ searchParams, disabledFacets, intro, collecti
   }
 
   const { facetDistribution, hits, totalPages, totalHits } = await searchProducts(q, sortBy, page, composeFilters(filterBuilder, rest, HIERARCHICAL_SEPARATOR).build())
+  
+
+  //const hits = unidades;
 
   return (
     <div className="max-w-container-md mx-auto w-full px-4 py-12 md:py-24 xl:px-0">
@@ -53,7 +59,7 @@ export async function SearchView({ searchParams, disabledFacets, intro, collecti
       <div className="flex gap-12 md:gap-24">
         <FacetsDesktop disabledFacets={disabledFacets} className="hidden shrink-0  basis-[250px] lg:block" facetDistribution={facetDistribution} />
         <div className="w-full">
-          <Controls disabledFacets={disabledFacets} facetDistribution={facetDistribution} totalHits={totalHits} />
+          <Controls disabledFacets={disabledFacets} facetDistribution={facetDistribution} totalHits={12} />
           <Suspense>
             <SearchFacet className="mb-6" />
           </Suspense>

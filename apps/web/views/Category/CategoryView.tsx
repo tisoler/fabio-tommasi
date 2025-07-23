@@ -1,3 +1,4 @@
+import { obtenerUnidadesParaCategoria } from "app/actions/categoria.actions"
 import { getCollection } from "app/actions/collection.actions"
 import { notFound } from "next/navigation"
 import { SearchParamsType } from "types"
@@ -10,9 +11,10 @@ interface CategoryViewProps {
 }
 
 export async function CategoryView({ params, searchParams = {} }: CategoryViewProps) {
-  const collection = await getCollection(params.slug)
+  const unidades = await obtenerUnidadesParaCategoria(params.slug);
+  // const collection = await getCollection(params.slug);
 
-  if (!collection) return notFound()
+  if (!unidades) return notFound()
 
   return (
     <SearchView
@@ -20,6 +22,7 @@ export async function CategoryView({ params, searchParams = {} }: CategoryViewPr
       params={params}
       collection={collection}
       intro={<HeroSection handle={collection.handle} title={collection.title} description={collection.description} image={collection.image} />}
+      unidades={unidades}
     />
   )
 }
